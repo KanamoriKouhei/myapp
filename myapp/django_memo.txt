@@ -1,5 +1,57 @@
-モデル作成→マイグレーション実行→モデルの内容がDBに反映される
+/モデル作成→マイグレーション実行→モデルの内容がDBに反映される
 
 １モデルを変更する (models.py の中の)
 ２これらの変更のためのマイグレーションを作成するために python manage.py makemigrations を実行します。
 ３データベースにこれらの変更を適用するために python manage.py migrate を実行します。
+
+/djangoのファイル構成
+$ django-admin startproject mysite
+
+mysite
+-settings.py
+-manage.py
+-.gitignore
+
+$ python manage.py startapp polls
+mysite
+-settings.py
+-manage.py
+-.gitignore
+-polls
+ -views.py
+ -models.py
+
+/mysite/settings.py installed_apps
+各アプリの有効化
+django.contrib.admin - 管理（admin）サイト。後ほど説明します。
+django.contrib.auth - 認証システム
+django.contrib.contenttypes - コンテンツタイプフレームワーク
+django.contrib.sessions - セッションフレームワーク
+django.contrib.messages - メッセージフレームワーク
+django.contrib.staticfiles - 静的ファイルの管理フレームワーク
+
+/DBの設定 mysite/settings.py
+# デフォルトのままの、SQLiteの例
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }]]
+
+ENGINE
+'django.db.backends.sqlite3'
+'django.db.backends.postgresql'
+ 'django.db.backends.mysql'
+ 'django.db.backends.oracle' のいずれかにします。
+※その他のバックエンド も利用可能です。
+
+NAME
+データベースの名前です。
+SQLite を使用している場合、データベースはコンピュータ上のファイルになります。
+その場合、NAME には、そのファイルのファイル名を含んだ絶対パスを指定する必要があります。
+デフォルト値は os.path.join(BASE_DIR, 'db.sqlite3') で、ファイルはプロジェクトのディレクトリに保存されます。
+
+/migrate
+1modelの変更
+２python manage.py makemigrations マイグレーションファイル作成
+３python manage.py migrate マイグレーション実行しDBに変更適用
